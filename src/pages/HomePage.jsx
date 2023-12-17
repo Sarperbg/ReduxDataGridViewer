@@ -16,19 +16,25 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const { modal } = useSelector((state) => state.modal);
   const { data } = useSelector((state) => state.data);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchDataFromApi();
   }, []);
 
+
   const fetchDataFromApi = async () => {
     try {
-      const apiData = await fetchData();
+      setLoading(true);
+      const apiData = await fetchData(formData);
       dispatch(updateDataFunc(apiData));
     } catch (error) {
       console.error('API isteği başarısız:', error);
+    } finally {
+      setLoading(false);
     }
   };
+
 
   const handlePostRequest = async () => {
     if (!formData.link || !formData.socialMedia || !formData.desc) {
@@ -42,14 +48,17 @@ const HomePage = () => {
 
       setFormData({ link: '', socialMedia: '', desc: '' });
 
-      fetchDataFromApi();
+      dispatch(updateDataFunc([...data, formData]));
 
       dispatch(modalFunc());
+      window.location.reload();
+
     } catch (error) {
       toast.error('Post isteği başarısız oldu');
       console.error('POST isteği başarısız:', error);
     }
   };
+
 
   const handleChange = (e, field) => {
     setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
@@ -70,23 +79,23 @@ const HomePage = () => {
         <Input type='text' name='desc' value={formData.desc} onChange={(e) => handleChange(e, 'desc')} />
       </div>
       <div className='flex justify-end gap-4 mt-10'>
-      <Button btnText='Vazgeç' 
-      className='bg-[#F5F7FF] text-[#744BFC] rounded-[34px] p-4 font-medium font-sans  cursor-pointer hover:scale-95'
-       onClick={() => dispatch(modalFunc())} />
-        <Button 
-        btnText='Kaydet'
-        className='bg-[#744BFC] text-[#FFFFFF] rounded-[34px] p-4 font-medium font-sans  cursor-pointer hover:scale-95'
-        onClick={handlePostRequest} />
+        <Button btnText='Vazgeç'
+          className='bg-[#F5F7FF] text-[#744BFC] rounded-[34px] p-4 font-medium font-sans  cursor-pointer hover:scale-95'
+          onClick={() => dispatch(modalFunc())} />
+        <Button
+          btnText='Kaydet'
+          className='bg-[#744BFC] text-[#FFFFFF] rounded-[34px] p-4 font-medium font-sans  cursor-pointer hover:scale-95'
+          onClick={handlePostRequest} />
       </div>
     </div>
   );
 
   return (
     <div className='flex-table w-[95%] h-full mx-auto'>
-      <TableHeader />
+      <TableHeader data={data} />
       <ProductTable data={data} />
       {modal && <Modal contentModal={contentModal} title='Hesap Ekle' />}
-      <Pagination data={formData} />
+      <Pagination data={data} />
     </div>
   );
 };

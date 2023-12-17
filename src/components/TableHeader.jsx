@@ -5,9 +5,10 @@ import union from '../assets/Union.png';
 import { useDispatch } from 'react-redux';
 import { modalFunc } from "../redux/modalSlice"
 
-const TableHeader = ({ className, ...props }) => {
+const TableHeader = ({data,  className, ...props }) => {
   const dispatch = useDispatch();
 
+  
   return (
     <div className="bg-gradient-to-t from-[#E8ECFF00] to-[#a9b3de]">
       <div className="flex justify-between items-center">

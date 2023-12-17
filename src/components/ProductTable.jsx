@@ -4,47 +4,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
 const ProductTable = () => {
-  const [linkSortOrder, setLinkSortOrder] = useState('asc');
-  const [nameSortOrder, setNameSortOrder] = useState('desc');
-  const [data, setData] = useState([]); 
-  
+  const [data, setData] = useState([]);
+  const [sortOrder, setSortOrder] = useState({ link: 'asc', socialMedia: 'asc' });
+
   useEffect(() => {
     fetchData();
-  }, []); 
+  }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3003/users');
       setData(response.data);
-      
     } catch (error) {
       console.error('API isteği başarısız:', error);
     }
   };
 
-  const handleSort = (field, sortOrder, setSortOrder) => {
+  const handleSort = (field) => {
     const sortedData = [...data].sort((a, b) => {
       const fieldA = (a && a[field] || '').toString();
       const fieldB = (b && b[field] || '').toString();
 
-      return sortOrder === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+      return sortOrder[field] === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
     });
 
     setData(sortedData);
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+
+    // Sıralama durumunu güncelle
+    setSortOrder((prevSortOrder) => ({
+      ...prevSortOrder,
+      [field]: prevSortOrder[field] === 'asc' ? 'desc' : 'asc',
+    }));
   };
 
-  const sortingIcon = (sortOrder, onClick) => (
-    <button className="focus:outline-none" onClick={onClick}>
+  const sortingIcon = (field) => (
+    <button className="focus:outline-none" onClick={() => handleSort(field)}>
       <FontAwesomeIcon
-        icon={sortOrder === 'asc' ? faArrowUp : faArrowDown}
-        className={`text-${sortOrder === 'asc' ? '[#744BFC]' : 'gray-500'} text-2xl`}
-        />
+        icon={sortOrder[field] === 'asc' ? faArrowUp : faArrowDown}
+        className={`text-${sortOrder[field] === 'asc' ? '[#744BFC]' : 'gray-500'} text-2xl`}
+      />
     </button>
   );
-
-  const topLeftIcon = sortingIcon(linkSortOrder, () => handleSort('link', linkSortOrder, setLinkSortOrder));
-  const topRightIcon = sortingIcon(nameSortOrder, () => handleSort('socialMedia', nameSortOrder, setNameSortOrder));
 
   return (
     <div className="flex w-[90%] mx-auto border-[#EAEAEA] p-2 overflow-hidden">
@@ -54,13 +54,13 @@ const ProductTable = () => {
             <th className="py-6 px-10 border-b text-left w-1/4">
               <div className="flex items-center justify-between">
                 <div>Sosyal Medya Linki</div>
-                {topLeftIcon}
+                {sortingIcon('link')}
               </div>
             </th>
             <th className="py-6 px-10 border-b text-left w-1/4">
               <div className="flex items-center justify-between">
                 <div>Sosyal Medya Adı</div>
-                {topRightIcon}
+                {sortingIcon('socialMedia')}
               </div>
             </th>
             <th className="py-6 px-10 border-b text-left w-2/4">
