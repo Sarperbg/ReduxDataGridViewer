@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+body {
+ font-family: 'Inter', sans-serif;
+}
+.flex-table {
+ background: linear-gradient(180deg, #EFF2FF -30.56%, rgba(232, 236, 255, 0) 135.85%);
+}
+.pagination-container {
+ display: flex;
+ align-items: center;
+}
+
+.pagination-space {
+ flex: 1; /* Esneklik ekleyerek sayfayı sağa ve sola itecek */
+}

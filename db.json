@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "link": "https://example.com/user1",
+      "socialMedia": "Twitter",
+      "desc": "Açıklama 1"
+    },
+    {
+      "id": 2,
+      "link": "https://example.com/user2",
+      "socialMedia": "Facebook",
+      "desc": "Açıklama 2"
+    },
+    {
+      "id": 3,
+      "link": "https://example.com/user3",
+      "socialMedia": "Instagram",
+      "desc": "Açıklama 3"
+    },
+    {
+      "id": 4,
+      "link": "https://example.com/user4",
+      "socialMedia": "LinkedIn",
+      "desc": "Açıklama 4"
+    },
+    {
+      "id": 5,
+      "link": "https://example.com/user5",
+      "socialMedia": "Twitter",
+      "desc": "Açıklama 5"
+    },
+    {
+      "id": 6,
+      "link": "https://example.com/user6",
+      "socialMedia": "Facebook",
+      "desc": "Açıklama 6"
+    },
+    {
+      "id": 7,
+      "link": "https://example.com/user7",
+      "socialMedia": "Instagram",
+      "desc": "Açıklama 7"
+    },
+    {
+      "id": 8,
+      "link": "https://example.com/user8",
+      "socialMedia": "LinkedIn",
+      "desc": "Açıklama 8"
+    },
+    {
+      "id": 9,
+      "link": "https://example.com/user9",
+      "socialMedia": "Twitter",
+      "desc": "Açıklama 9"
+    },
+    {
+      "id": 10,
+      "link": "https://example.com/user10",
+      "socialMedia": "Facebook",
+      "desc": "Açıklama 10"
+    }
+  ]
+}
